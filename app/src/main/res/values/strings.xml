@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DLNA Explorer</string>
+    <string name="status_label">Hello world!</string>
+    <string name="action_copy_to_clipboard">Copy to clipboard</string>
+    <string name="refresh_button">Refresh</string>
+
+</resources>
