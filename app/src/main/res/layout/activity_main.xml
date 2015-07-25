@@ -7,7 +7,7 @@
 
     <TextView android:text="@string/status_label" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
+        android:id="@+id/textView_mainTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/textView_mainStatus"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
         android:layout_alignParentBottom="true"
@@ -31,14 +31,14 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvDiscoveryReplies"
+        android:id="@+id/listView_DiscoveryReplies"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView"
-        android:layout_above="@+id/textView2"
-        android:headerDividersEnabled="false" />
+        android:layout_below="@+id/textView_mainTitle"
+        android:layout_above="@+id/textView_mainStatus"
+        android:headerDividersEnabled="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

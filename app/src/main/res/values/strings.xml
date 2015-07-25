@@ -2,8 +2,10 @@
 <resources>
 
     <string name="app_name">DLNA Explorer</string>
-    <string name="status_label">Hello world!</string>
+    <string name="status_label"></string>
     <string name="action_copy_to_clipboard">Copy to clipboard</string>
     <string name="refresh_button">Refresh</string>
+    <string name="title_activity_detail">UPnP Device Details</string>
+    <string name="hello_world"></string>
 
 </resources>

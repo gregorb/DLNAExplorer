@@ -1,9 +1,9 @@
 package si.ox.dlnaexplorer;
 
-import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.ActionBarActivity;
@@ -12,10 +12,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.*;
 import java.net.*;
@@ -40,15 +42,31 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // make details TextView scrollable
-        TextView details = (TextView) findViewById(R.id.textView2);
+        TextView details = (TextView) findViewById(R.id.textView_mainStatus);
         details.setMovementMethod(new ScrollingMovementMethod());
 
         // setup discoveryReplyList and it's adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, discoveryReplyList);
         adapter.addAll(discoveryReplyList);
-        ListView lvDiscoveryReplies = (ListView) findViewById(R.id.lvDiscoveryReplies);
+        final ListView lvDiscoveryReplies = (ListView) findViewById(R.id.listView_DiscoveryReplies);
         lvDiscoveryReplies.setAdapter(adapter);
+        //
+        lvDiscoveryReplies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // ListView Clicked item value
+                String itemValue = (String) lvDiscoveryReplies.getItemAtPosition(position);
+
+                Intent i = new Intent(MainActivity.this, DetailActivity.class);
+                i.putExtra("upnpDiscoveryStr", itemValue);
+                MainActivity.this.startActivity(i);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+
+        });
     }
 
     @Override
@@ -96,8 +114,8 @@ public class MainActivity extends ActionBarActivity {
         final String text2 = text;
         runOnUiThread(new Runnable() {
             public void run() {
-                TextView status = (TextView) findViewById(R.id.textView);
-                TextView details = (TextView) findViewById(R.id.textView2);
+                TextView status = (TextView) findViewById(R.id.textView_mainTitle);
+                TextView details = (TextView) findViewById(R.id.textView_mainStatus);
 
                 status.setText(title2);
                 details.setText(text2);
@@ -124,7 +142,7 @@ public class MainActivity extends ActionBarActivity {
         // clear old data
         {
             discoveryReplyList.clear();
-            ListView lvDiscoveryReplies = (ListView) findViewById(R.id.lvDiscoveryReplies);
+            ListView lvDiscoveryReplies = (ListView) findViewById(R.id.listView_DiscoveryReplies);
             ArrayAdapter<String> adapter = (ArrayAdapter<String>) lvDiscoveryReplies.getAdapter();
             adapter.clear();
             adapter.notifyDataSetChanged();
@@ -211,7 +229,7 @@ public class MainActivity extends ActionBarActivity {
 
                                         runOnUiThread(new Runnable() {
                                             public void run() {
-                                                ListView lvDiscoveryReplies = (ListView) findViewById(R.id.lvDiscoveryReplies);
+                                                ListView lvDiscoveryReplies = (ListView) findViewById(R.id.listView_DiscoveryReplies);
                                                 ArrayAdapter<String> adapter = (ArrayAdapter<String>) lvDiscoveryReplies.getAdapter();
                                                 adapter.add(packetData);
                                                 adapter.notifyDataSetChanged();
