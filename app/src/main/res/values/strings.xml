@@ -7,5 +7,7 @@
     <string name="refresh_button">Refresh</string>
     <string name="title_activity_detail">UPnP Device Details</string>
     <string name="hello_world"></string>
+    <string name="detail_raw_title">UPnP Device Raw Data</string>
+    <string name="detail_info_title">UPnP Device Info</string>
 
 </resources>

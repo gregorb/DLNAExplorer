@@ -224,19 +224,20 @@ public class MainActivity extends ActionBarActivity {
                                         new String(packet.getData(), packet.getOffset(), packet.getLength());
                                     updateStatusInUiThread("Waiting for more responses.", details);
 
-                                    if (!discoveryReplyList.contains(packetData)) {
-                                        discoveryReplyList.add(packetData);
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            if (!discoveryReplyList.contains(packetData)) {
+                                                discoveryReplyList.add(packetData);
 
-                                        runOnUiThread(new Runnable() {
-                                            public void run() {
                                                 ListView lvDiscoveryReplies = (ListView) findViewById(R.id.listView_DiscoveryReplies);
                                                 ArrayAdapter<String> adapter = (ArrayAdapter<String>) lvDiscoveryReplies.getAdapter();
                                                 adapter.add(packetData);
                                                 adapter.notifyDataSetChanged();
-                                            }
-                                        });
 
-                                    }
+                                            }
+                                        }
+                                    });
+
 
                                 } catch (SocketTimeoutException e) {
                                 }
