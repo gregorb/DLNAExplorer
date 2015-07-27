@@ -22,6 +22,8 @@ import android.widget.Toast;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -48,7 +50,6 @@ public class MainActivity extends ActionBarActivity {
         // setup discoveryReplyList and it's adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, discoveryReplyList);
-        adapter.addAll(discoveryReplyList);
         final ListView lvDiscoveryReplies = (ListView) findViewById(R.id.listView_DiscoveryReplies);
         lvDiscoveryReplies.setAdapter(adapter);
         //
@@ -141,11 +142,9 @@ public class MainActivity extends ActionBarActivity {
 
         // clear old data
         {
-            discoveryReplyList.clear();
             ListView lvDiscoveryReplies = (ListView) findViewById(R.id.listView_DiscoveryReplies);
             ArrayAdapter<String> adapter = (ArrayAdapter<String>) lvDiscoveryReplies.getAdapter();
-            adapter.clear();
-            adapter.notifyDataSetChanged();
+            adapter.clear();  // same as: discoveryReplyList.clear(); adapter.notifyDataSetChanged();
         }
 
         // get new data
@@ -196,7 +195,7 @@ public class MainActivity extends ActionBarActivity {
                                         "User-agent:si.ox.dlnaexplorer/0.1 UDAP/2.0\r\n" +
                                         "\r\n";
                                 DatagramPacket packet = new DatagramPacket(
-                                        srchMsg.getBytes("US_ASCII"), srchMsg.length(),
+                                        srchMsg.getBytes("US-ASCII"), srchMsg.length(),
                                         InetAddress.getByName("239.255.255.250"), 1900);
                                 serverSocket.send(packet);
                             }
@@ -226,15 +225,15 @@ public class MainActivity extends ActionBarActivity {
 
                                     runOnUiThread(new Runnable() {
                                         public void run() {
+
                                             if (!discoveryReplyList.contains(packetData)) {
-                                                discoveryReplyList.add(packetData);
 
                                                 ListView lvDiscoveryReplies = (ListView) findViewById(R.id.listView_DiscoveryReplies);
                                                 ArrayAdapter<String> adapter = (ArrayAdapter<String>) lvDiscoveryReplies.getAdapter();
-                                                adapter.add(packetData);
-                                                adapter.notifyDataSetChanged();
+                                                adapter.add(packetData);  // better than: discoveryReplyList.add(packetData); adapter.notifyDataSetChanged();
 
                                             }
+
                                         }
                                     });
 

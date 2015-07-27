@@ -147,11 +147,23 @@ public class DetailActivity extends ActionBarActivity implements ActionBar.TabLi
         if (m.find())
             url = m.group(1).trim();
 
-        httpResponse = "waiting for http response from:\n" + url;
-        if (details != null)
-            details.setText(upnpResponse + "\n\n" + httpResponse);
+        // Location URL might not actually be a URL
+        if (url.toLowerCase().startsWith("http")) {
 
-        new RequestTask().execute(url);
+            httpResponse = "waiting for http response from:\n" + url;
+            if (details != null)
+                details.setText(upnpResponse + "\n\n" + httpResponse);
+
+            new RequestTask().execute(url);
+
+        } else {
+
+            httpResponse = "Location is not a URL: " + url;
+            if (details != null)
+                details.setText(upnpResponse + "\n\n" + httpResponse);
+
+        }
+
     }
 
     @Override
